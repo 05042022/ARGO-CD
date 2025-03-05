@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apache-argo-app
+  namespace: argocd  # Argo CD runs in 'argocd' namespace
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/05042022/ARGO-CD.git'  # Your repo URL
+    targetRevision: main  # Change to correct branch if needed
+    path: argo-apache  # Folder in repo where YAML files are stored
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
